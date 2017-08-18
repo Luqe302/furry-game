@@ -16,7 +16,7 @@ function Game() {
     this.coin = new Coin();
     this.score = 0;
     this.isGameOver = false;
-    this.speed = 2250;
+    this.speed = 950;
     var self = this;
 
     this.position = function(x, y) {
@@ -65,7 +65,7 @@ function Game() {
         this.kolizja();
     };
 
-    document.addEventListener("keyup", function(event) {
+    document.addEventListener("keydown", function(event) {
         if (event.which === 39) {
             self.furek.direction = "right";
         }else if (event.which === 38) {
@@ -86,7 +86,7 @@ function Game() {
             this.divScore.innerText = this.score;
             this.coin = new Coin();
             this.showCoin();
-            this.speed = this.speed - 50;
+            this.speed = this.speed - 10;
             this.startGame();
             // funkcja, ktora wywoluje interwal
             // i przekazuje mu nowy speed
