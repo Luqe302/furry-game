@@ -10,7 +10,7 @@ function Game() {
     self.coin = new Coin();
     self.score = 0;
     self.isGameOver = false;
-    self.speed = 550;
+    self.speed = 500;
 
     self.position = function(x, y) {
         return x + (y * 10);
@@ -74,6 +74,7 @@ function Game() {
         if (self.board[ self.position(self.furek.x,self.furek.y)] ===
         self.board[ self.position(self.coin.x,self.coin.y)]) {
             var divCoin = document.querySelector(".coin");
+            divCoin.classList.add("light");
             divCoin.classList.remove("coin");
             self.score = self.score + 1;
             self.divScore.innerText = self.score;
@@ -89,10 +90,20 @@ function Game() {
             self.hideVisibleFurry();
             self.stopTimeout();
             console.log("gejm ower");
-            var koniec = document.querySelector("#board");
-            koniec.innerHTML = "Twoj wynik to " + self.score;
 
+            self.createScoreBoard();
         }
+    };
+
+    self.createScoreBoard = function() {
+        var scoreBoard = document.querySelector("#board");
+        var score = document.createElement("div");
+        var wrapperScore = document.createElement("div");
+        wrapperScore.className = "wrapperScore";
+        score.innerHTML = "Koniec gry" + " Zdobyłeś <span>" + self.score + "</span> punktów";
+        scoreBoard.innerHTML = "";
+        scoreBoard.appendChild(wrapperScore);
+        wrapperScore.appendChild(score);
     };
 
     self.startMove = function() {
