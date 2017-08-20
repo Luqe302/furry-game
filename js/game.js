@@ -80,7 +80,7 @@ function Game() {
             self.divScore.innerText = self.score;
             self.coin = new Coin();
             self.showCoin();
-            self.speed = self.speed - 100;
+            self.speed = self.speed - 30;
         }
     };
 
@@ -100,10 +100,17 @@ function Game() {
         var score = document.createElement("div");
         var wrapperScore = document.createElement("div");
         wrapperScore.className = "wrapperScore";
-        score.innerHTML = "Koniec gry" + " Zdobyłeś <span>" + self.score + "</span> punktów";
+        score.innerHTML = "Koniec gry<br>" + "Zdobyłeś <span>" + self.score + "</span> punktów";
         scoreBoard.innerHTML = "";
         scoreBoard.appendChild(wrapperScore);
         wrapperScore.appendChild(score);
+    };
+
+    self.retryGame = function() {
+        var retryGame = document.createElement("button");
+        retryGame.addEventListener("click", function() {
+
+        });
     };
 
     self.startMove = function() {

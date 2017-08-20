@@ -11,6 +11,45 @@ section#score {
   width: 100%;
 }
 
+.board-wrapper {
+    position: relative;
+    width: 640px;
+    height: 640px;
+    margin: 0 auto;
+}
+
+@keyframes border {
+    0%   { height: 640px;   width: 5px;     left: -8px;      top: 0 }
+    12.5%  { height: 5px;     width: 5px;     left: -8px;     top: -8px; }
+    25%  { height: 5px;     width: 640px;   left: -8px;      top: -8px; }
+    37.5%  { height: 5px;     width: 5px;     left: calc(100% + 3px);      top: -8px; }
+    50%  { height: 640px;   width: 5px;     left: calc(100% + 3px);      top: -8px; }
+    62.5%  { height: 5px;     width: 5px;     left: calc(100% + 3px);      top: calc(100% + 3px); }
+    75%  { height: 5px;     width: 640px;   left: -8px;      top: calc(100% + 3px); }
+    87.5% { height: 5px;     width: 5px;     left: -8px;      top: calc(100% + 3px); }
+
+}
+
+@keyframes backgroundFlash {
+    0% {background-color: #e4b321;}
+    25% {background-color: #FF2005 }
+    50% {background-color: #006BFF}
+    75% {background-color: #A5CC14}
+    100% {background-color: #8FB209}
+}
+
+.board-wrapper::after {
+    border-radius: 50%;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 5px;
+    height: 640px;
+    left: -8px;
+    top: 0;
+    animation: border 12s infinite, backgroundFlash 5s infinite;
+}
+
 #board {
   width: 640px;
   height: 640px;
@@ -46,6 +85,7 @@ section#score div {
   border-radius: 1px;
   box-shadow: 1px 1px 5px 1px lightgray;
   margin: 1em auto;
+  position: relative;
 }
 
 
@@ -54,12 +94,60 @@ section#score div {
   background-image: url('../images/furry.png');
   background-repeat: no-repeat;
   background-size: cover;
+  z-index: 4;
 }
+
 .coin {
-  background-image: url('../images/coin.png');
-  background-repeat: no-repeat;
-  background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
+
+.coin::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8b500+42,fbdf93+100 */
+    background: linear-gradient(45deg, #f8b500 42%,#fbdf93 100%);
+    border-radius: 50%;
+    text-shadow: 3px 3px 5px rgba(0,0,0,.35)
+}
+
+.coin::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,.8) 0%,rgba(255,255,255,0) 50%);
+    border-radius: 50%;
+    z-index: 2;
+    right: 15px;
+    top: 15px;
+}
+
+.light {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.light::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8b500+42,fbdf93+100 */
+    background: transparent;
+    border-radius: 50%;
+}
+
+
 
 section#over {
   position: fixed;
@@ -94,6 +182,8 @@ section#over pre {
 }
 
 .wrapperScore div {
+    text-align: center;
+    line-height: 2rem;
     top: 130px;
     position: absolute;
     color: white;
@@ -114,11 +204,11 @@ section#over pre {
     100% {color: #8FB209}
 }
 
-.light {
-    animation: light 1s;
+.light::after {
+    animation: light .8s 1;
 }
 
 @keyframes light {
     from {box-shadow: 0 0 0 gold}
-    to {box-shadow: 0 0 100px transparent;}
+    to {box-shadow: 0px 0px 80px 60px transparent;}
 }
