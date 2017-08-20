@@ -10,7 +10,7 @@ function Game() {
     self.coin = new Coin();
     self.score = 0;
     self.isGameOver = false;
-    self.speed = 500;
+    self.speed = 680;
 
     self.position = function(x, y) {
         return x + (y * 10);
@@ -80,7 +80,7 @@ function Game() {
             self.divScore.innerText = self.score;
             self.coin = new Coin();
             self.showCoin();
-            self.speed = self.speed - 30;
+            self.speed = self.speed - 15;
         }
     };
 
@@ -101,16 +101,23 @@ function Game() {
         var wrapperScore = document.createElement("div");
         wrapperScore.className = "wrapperScore";
         score.innerHTML = "Koniec gry<br>" + "Zdobyłeś <span>" + self.score + "</span> punktów";
-        scoreBoard.innerHTML = "";
+        for (var i = 0; i < self.board.length; i++) {
+            self.board[i].style.display = "none";
+        }
         scoreBoard.appendChild(wrapperScore);
         wrapperScore.appendChild(score);
+        self.retryGame();
     };
 
     self.retryGame = function() {
         var retryGame = document.createElement("button");
-        retryGame.addEventListener("click", function() {
+        retryGame.innerText = "Zagraj ponownie";
+        var scoreBoard = document.querySelector("#board .wrapperScore div");
 
+        retryGame.addEventListener("click", function() {
+            location.reload();
         });
+        scoreBoard.appendChild(retryGame);
     };
 
     self.startMove = function() {
