@@ -68,12 +68,6 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var Game = __webpack_require__(1);
-
-
-
-
-
-
 var gra = new Game();
 
 gra.showCoin();
@@ -88,59 +82,60 @@ var Furry = __webpack_require__(2);
 var Coin = __webpack_require__(3);
 
 function Game() {
-    this.board = document.querySelectorAll("#board div");
-    this.divScore = document.querySelector("#score strong");
-    this.furek = new Furry();
-    this.coin = new Coin();
-    this.score = 0;
-    this.isGameOver = false;
-    this.speed = 950;
     var self = this;
+    
+    self.board = document.querySelectorAll("#board div");
+    self.divScore = document.querySelector("#score strong");
+    self.furek = new Furry();
+    self.coin = new Coin();
+    self.score = 0;
+    self.isGameOver = false;
+    self.speed = 550;
 
-    this.position = function(x, y) {
+    self.position = function(x, y) {
         return x + (y * 10);
     };
 
-    this.showFurry = function() {
-        this.hideVisibleFurry();
-        this.board[ this.position(this.furek.x,this.furek.y) ].classList.add('furry');
+    self.showFurry = function() {
+        self.hideVisibleFurry();
+        self.board[ self.position(self.furek.x,self.furek.y) ].classList.add('furry');
     };
 
-    this.hideVisibleFurry = function() {
+    self.hideVisibleFurry = function() {
         var divFur = document.querySelector(".furry");
         if(divFur) {
             divFur.classList.remove('furry');
         }
     };
 
-    this.showCoin = function() {
-        this.board[ this.position(this.coin.x,this.coin.y) ].classList.add('coin');
+    self.showCoin = function() {
+        self.board[ self.position(self.coin.x,self.coin.y) ].classList.add('coin');
     };
 
-    this.moveFurry = function() {
+    self.moveFurry = function() {
 
-        if (this.furek.direction === "right") {
-            this.furek.x = this.furek.x + 1;
+        if (self.furek.direction === "right") {
+            self.furek.x = self.furek.x + 1;
 
-        }else if (this.furek.direction === "left") {
-            this.furek.x = this.furek.x - 1;
+        }else if (self.furek.direction === "left") {
+            self.furek.x = self.furek.x - 1;
 
-        }else if (this.furek.direction === "up") {
-            this.furek.y = this.furek.y - 1;
+        }else if (self.furek.direction === "up") {
+            self.furek.y = self.furek.y - 1;
 
-        }else if (this.furek.direction === "down") {
-            this.furek.y = this.furek.y + 1;
+        }else if (self.furek.direction === "down") {
+            self.furek.y = self.furek.y + 1;
 
         }
 
-        this.gameOver();
+        self.gameOver();
 
-        if (this.isGameOver === true) {
+        if (self.isGameOver === true) {
             return;
         }
-
-        this.showFurry();
-        this.kolizja();
+        self.startMove();
+        self.showFurry();
+        self.kolizja();
     };
 
     document.addEventListener("keydown", function(event) {
@@ -155,45 +150,44 @@ function Game() {
         }
     });
 
-    this.kolizja = function () {
-        if (this.board[ this.position(this.furek.x,this.furek.y)] ===
-        this.board[ this.position(this.coin.x,this.coin.y)]) {
+    self.kolizja = function () {
+        if (self.board[ self.position(self.furek.x,self.furek.y)] ===
+        self.board[ self.position(self.coin.x,self.coin.y)]) {
             var divCoin = document.querySelector(".coin");
             divCoin.classList.remove("coin");
-            this.score = this.score + 1;
-            this.divScore.innerText = this.score;
-            this.coin = new Coin();
-            this.showCoin();
-            this.speed = this.speed - 10;
-            this.startGame();
+            self.score = self.score + 1;
+            self.divScore.innerText = self.score;
+            self.coin = new Coin();
+            self.showCoin();
+            self.speed = self.speed - 100;
             // funkcja, ktora wywoluje interwal
             // i przekazuje mu nowy speed
         }
     };
 
-    this.gameOver = function() {
-        if(this.furek.x < 0 || this.furek.x > 9 || this.furek.y < 0 || this.furek.y > 9) {
-            this.isGameOver = true;
-            console.log("gameOver");
+    self.gameOver = function() {
+        if(self.furek.x < 0 || self.furek.x > 9 || self.furek.y < 0 || self.furek.y > 9) {
+            self.isGameOver = true;
             self.hideVisibleFurry();
-            this.stopInterval();
-
+            self.stopTimeout();
+            console.log("gejm ower");
             var koniec = document.querySelector("#board");
-            koniec.innerHTML = "Twoj wynik to " + this.score;
+            koniec.innerHTML = "Twoj wynik to " + self.score;
 
         }
     };
 
-    this.startGame = function() {
-        setInterval(function() {
+    self.startMove = function() {
+        setTimeout(function() {
             self.moveFurry();
-        }, this.speed);
+        }, self.speed);
     };
 
 
-    this.idSetInterval = this.startGame();
-    this.stopInterval = function() {
-        clearInterval(self.idSetInterval);
+    self.startMove();
+
+    self.stopTimeout = function() {
+        clearTimeout(self.startMove);
     };
 }
 
