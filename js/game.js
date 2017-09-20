@@ -81,6 +81,9 @@ function Game() {
             self.coin = new Coin();
             self.showCoin();
             self.speed = self.speed - 15;
+            setTimeout(function() {
+                divCoin.classList.remove("light");
+            }, 900);
         }
     };
 
@@ -127,11 +130,21 @@ function Game() {
     };
 
 
-    self.startMove();
-
     self.stopTimeout = function() {
         clearTimeout(self.startMove);
     };
+
+    (function() {
+
+        var startButton = document.querySelector("#start-button");
+
+        startButton.addEventListener("click", function() {
+            self.startMove();
+            startButton.remove();
+        }, false);
+
+    })();
+
 }
 
 module.exports = Game;
